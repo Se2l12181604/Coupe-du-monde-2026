@@ -1,0 +1,47 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Get Architecture cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.buildozer
+        key: ${{ runner.os }}-buildozer-${{ github.run_id }}
+        restore-keys: |
+          ${{ runner.os }}-buildozer-
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Install Buildozer dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libssl-dev libffi-dev ccache libgdbm-dev libgdbm-compat-dev libsqlite3-dev sqlite3 bzip2 libbz2-dev zlib1g-dev autoconf automake libtool pkg-config patch
+
+    - name: Install Buildozer & Cython
+      run: |
+        pip install --upgrade pip
+        pip install "cython<3.0.0" virtualenv buildozer
+
+    - name: Build Android APK
+      run: |
+        yes | buildozer -v android debug
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Coupe-du-Monde-2026-APK
+        path: bin/*.apk

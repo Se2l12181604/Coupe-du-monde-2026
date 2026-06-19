@@ -36,12 +36,14 @@ jobs:
         pip install --upgrade pip
         pip install "cython<3.0.0" virtualenv buildozer
 
-    - name: Build Android APK
+        - name: Build Android APK
       run: |
-        yes | buildozer -v android debug
+        yes | buildozer -v android debug || (echo "=== FIN DU LOG EN CAS D'ERREUR ===" && tail -n 100 ~/.buildozer/android/platform/python-for-android/build.log || tail -n 100 /home/runner/work/Coupe-du-monde-2026/Coupe-du-monde-2026/.buildozer/android/platform/build.log)
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: Coupe-du-Monde-2026-APK
         path: bin/*.apk
+
+

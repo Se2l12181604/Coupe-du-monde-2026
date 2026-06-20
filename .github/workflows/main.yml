@@ -38,17 +38,17 @@ jobs:
 
     - name: Build Android APK
       run: |
-        echo "Lancement du build (nettoyage des lignes de compilation en cours)..."
-        yes | buildozer -v android debug 2>&1 | grep -v -E "Compile\+\+|clang\+\+|ccache| -c | -o " || true
+        echo "Lancement du build..."
+        # On lance le build en supprimant la compilation C++ et les variables d'environnement finales
+        yes | buildozer -v android debug 2>&1 | grep -v -E "Compile\+\+|clang\+\+|ccache| -c | -o |^#\s+ANDROID|^#\s+GITHUB|^#\s+PACKAGES_PATH|^#\s+AGENT_TOOLS|^#\s+DEBIAN|^#\s+ENABLE_RUNNER" || true
         
         echo "=== VÉRIFICATION DU RÉSULTAT ==="
         if [ -d "bin" ] && [ "$(ls -A bin)" ]; then
           echo "Succès ! Un APK a été généré."
         else
-          echo "Le build a échoué. L'erreur devrait être visible juste au-dessus."
+          echo "Le build a échoué. L'erreur principale est isolée juste au-dessus."
           exit 1
         fi
-
 
 
 

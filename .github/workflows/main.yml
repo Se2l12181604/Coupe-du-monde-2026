@@ -23,28 +23,20 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Dependencies
+      - name: Install System Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential libssl-dev libffi-dev ccache libgdbm-dev libgdbm-compat-dev git zip unzip
 
-      - name: Install Buildozer and Cython
+      - name: Install Python Dependencies
         run: |
-          pip install --upgrade pip
-          pip install "cython<3.0.0" virtualenv buildozer
+          python -m pip install --upgrade pip
+          pip install "setuptools<70.0.0" "cython<3.0.0" virtualenv buildozer
 
       - name: Build with Buildozer
         run: |
-          # On efface les variables globales de GitHub pour forcer une installation locale propre
-          unset ANDROID_HOME
-          unset ANDROID_NDK_HOME
+          export ANDROID_HOME=""
+          export ANDROID_NDK_HOME=""
           export ANDROID_SDK_ROOT=""
-          
-          # On lance le build
-          buildozer -v android debug
+          yes | buildozer -v android debug
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: Coupe-du-Monde-2026-APK
-          path: bin/*.apk

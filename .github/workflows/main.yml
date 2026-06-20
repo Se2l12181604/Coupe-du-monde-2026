@@ -44,7 +44,7 @@ jobs:
     - name: Build Android APK
       run: |
         echo "Lancement du build..."
-        yes | buildozer -v android debug > build_output.log 2>&1
+        yes | buildozer -v android debug
 
     - name: Upload Logs in case of Failure
       if: failure() || cancelled()

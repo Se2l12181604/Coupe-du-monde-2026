@@ -39,7 +39,7 @@ jobs:
     - name: Build Android APK
       run: |
         echo "Lancement du build..."
-        yes | buildozer -v android debug > build_output.log 2>&1 || (echo "=== BLOC DE CRASH DETECTE ===" && tail -n 350 build_output.log && exit 1)
+        yes | buildozer -v android debug > build_output.log 2>&1 || (echo "=== RECHERCHE DE L'ERREUR DANS LE LOG ===" && grep -E "error:|exception:|failed:|not found" -i build_output.log | tail -n 50 && echo "=== 100 DERNIÈRES LIGNES AVANT LE CRASH ===" && tail -n 100 build_output.log && exit 1)
         echo "Build réussi !"
 
 

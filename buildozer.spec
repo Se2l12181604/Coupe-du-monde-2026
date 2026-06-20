@@ -1,3 +1,4 @@
+
 [app]
 
 # (str) Title of your application
@@ -43,10 +44,6 @@ android.ndk = 25b
 # (int) Android NDK API to use
 android.ndk_api = 21
 
-# Forcer Buildozer à ignorer le NDK préinstallé de GitHub
-android.ndk_path = 
-android.allow_ndk_home = False
-
 # (bool) Use private storage for data
 android.private_storage = 1
 
@@ -62,4 +59,3 @@ log_level = 2
 
 # (int) Display warning if buildozer is run as root (0 = False, 1 = True)
 warn_on_root = 0
-

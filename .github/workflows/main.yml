@@ -38,12 +38,9 @@ jobs:
 
     - name: Build Android APK
       run: |
-        echo "Lancement du build (les détails de compilation C++ sont masqués pour éviter les logs trop lourds)..."
-        yes | buildozer -v android debug > build_output.log 2>&1 || (echo "=== LE BUILD A PLANTE ! VOICI LES 150 DERNIERES LIGNES ===" && tail -n 150 build_output.log && exit 1)
+        echo "Lancement du build..."
+        yes | buildozer -v android debug > build_output.log 2>&1 || (echo "=== BLOC DE CRASH DETECTE ===" && tail -n 350 build_output.log && exit 1)
         echo "Build réussi !"
 
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: Coupe-du-Monde-2026-APK
-        path: bin/*.apk
+
+

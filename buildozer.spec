@@ -4,7 +4,7 @@
 title = Coupe du Monde 2026
 
 # (str) Package name
-package.name = coupedumonde2026
+package.name = worldcup2026
 
 # (str) Package domain (needed for android packaging)
 package.domain = org.test
@@ -13,11 +13,13 @@ package.domain = org.test
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,json
+source.include_exts = py,png,jpg,kv,atlas,db,json
+
+# (str) Application version (IMPORTANT: Doit être entre guillemets)
+version = "1.0"
 
 # (list) Application requirements
-# SQLITE3 AJOUTÉ ICI POUR S'ASSURER QUE LA BASE DE DONNÉES CROISE BIEN TES RÉSULTATS
-requirements = python3==3.11.9,kivy,sqlite3
+requirements = python3==3.11.9,kivy==2.3.0,sqlite3
 
 # (str) Supported orientations (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait
@@ -41,21 +43,18 @@ android.ndk = 25b
 # (int) Android NDK API to use
 android.ndk_api = 21
 
-# (bool) Use ccache to speed up compilation
-android.meta_data =
+# (bool) Use private storage for data
+android.private_storage = 1
 
-# (list) Permissions
-android.permissions = INTERNET
+# (bool) Accept SDK license
+android.accept_sdk_license = True
 
 # (list) Architectures to build for
 android.archs = arm64-v8a, armeabi-v7a
-
-# (bool) skip byte compile for .py files
-android.skip_byte_compile = False
 
 [buildozer]
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
 log_level = 2
 
 # (int) Display warning if buildozer is run as root (0 = False, 1 = True)
-warn_on_root = 1
+warn_on_root = 0

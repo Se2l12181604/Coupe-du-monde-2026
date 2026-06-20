@@ -15,7 +15,7 @@ source.dir = .
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,db,json
 
-# (str) Application version (IMPORTANT: Doit être entre guillemets)
+# (str) Application version
 version = "1.0"
 
 # (list) Application requirements
@@ -42,6 +42,10 @@ android.ndk = 25b
 
 # (int) Android NDK API to use
 android.ndk_api = 21
+
+# FORCE BUILDOZER À UTILISER LE BON NDK ET LE BON PATH
+android.ndk_path = 
+android.allow_ndk_home = False
 
 # (bool) Use private storage for data
 android.private_storage = 1

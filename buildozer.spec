@@ -15,7 +15,7 @@ source.dir = .
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,db,json
 
-# (str) Application version
+# (str) Application version (IMPORTANT : Doit avoir des guillemets)
 version = "1.0"
 
 # (list) Application requirements
@@ -43,7 +43,7 @@ android.ndk = 25b
 # (int) Android NDK API to use
 android.ndk_api = 21
 
-# FORCE BUILDOZER À UTILISER LE BON NDK ET LE BON PATH
+# Forcer Buildozer à contourner l'environnement NDK par défaut de GitHub
 android.ndk_path = 
 android.allow_ndk_home = False
 

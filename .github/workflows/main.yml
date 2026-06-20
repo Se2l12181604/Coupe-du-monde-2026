@@ -38,9 +38,17 @@ jobs:
 
     - name: Build Android APK
       run: |
-        echo "Lancement du build..."
-        yes | buildozer -v android debug > build_output.log 2>&1 || (echo "=== RECHERCHE DE L'ERREUR DANS LE LOG ===" && grep -E "error:|exception:|failed:|not found" -i build_output.log | tail -n 50 && echo "=== 100 DERNIÈRES LIGNES AVANT LE CRASH ===" && tail -n 100 build_output.log && exit 1)
-        echo "Build réussi !"
+        echo "Lancement du build (nettoyage des lignes de compilation en cours)..."
+        yes | buildozer -v android debug 2>&1 | grep -v -E "Compile\+\+|clang\+\+|ccache| -c | -o " || true
+        
+        echo "=== VÉRIFICATION DU RÉSULTAT ==="
+        if [ -d "bin" ] && [ "$(ls -A bin)" ]; then
+          echo "Succès ! Un APK a été généré."
+        else
+          echo "Le build a échoué. L'erreur devrait être visible juste au-dessus."
+          exit 1
+        fi
+
 
 
 
